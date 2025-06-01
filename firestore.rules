@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{db}/documents {
+    // Users only see/write their own upload metadata
+    match /uploads/{userId}/chunks/{hash} {
+      allow read, write: if request.auth.uid == userId;
+    }
+    // Only your Cloud Function’s service account may create transcripts;
+    // users may only read transcripts tagged with their own userId.
+    match /transcripts/{hash} {
+      allow create: if request.auth.token.admin == true;
+      allow read:   if resource.data.userId == request.auth.uid;
+    }
+  }
+}
