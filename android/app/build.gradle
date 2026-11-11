@@ -78,4 +78,3 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'androidx.multidex:multidex:2.0.1'
 }
-																																																																																																																																																																																				tasks.named('preBuild') { dependsOn(rootProject.tasks.named('startApi')) }
